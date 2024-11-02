@@ -3,7 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{837B610A-2B24-48F8-B75B-A2C72050FFEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{837B610A-2B24-48F8-B75B-A2C72050FFEA}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "client", "client\", "{77C74F81-67E9-4172-89A2-32BC8A3B2ACE}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_61530"
+		Debug.AspNetCompiler.PhysicalPath = "client\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61530\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_61530"
+		Release.AspNetCompiler.PhysicalPath = "client\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61530\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "61530"
+		SlnRelativePath = "client\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +36,10 @@ Global
 		{837B610A-2B24-48F8-B75B-A2C72050FFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{837B610A-2B24-48F8-B75B-A2C72050FFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{837B610A-2B24-48F8-B75B-A2C72050FFEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C74F81-67E9-4172-89A2-32BC8A3B2ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C74F81-67E9-4172-89A2-32BC8A3B2ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C74F81-67E9-4172-89A2-32BC8A3B2ACE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C74F81-67E9-4172-89A2-32BC8A3B2ACE}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
