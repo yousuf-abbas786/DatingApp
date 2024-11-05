@@ -1,10 +1,13 @@
-<h1>{{title}}</h1>
 
-<ul>
+<app-nav></app-nav>
+
+<div class="container" style="margin-top: 100px;">
+  <ul>
     @for (user of users; track user.id)
     {
-      <li>
-        {{user.id}} - {{user.userName}}
-      </li>
+    <li>
+      {{user.id}} - {{user.userName}}
+    </li>
     }
-</ul>
+  </ul>
+</div>
