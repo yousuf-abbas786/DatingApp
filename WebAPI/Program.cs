@@ -7,6 +7,7 @@ using System.Text;
 using WebAPI.Data;
 using WebAPI.Extensions;
 using WebAPI.Interfaces;
+using WebAPI.Middleware;
 using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,7 @@ builder.Services.AddIdentityServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
