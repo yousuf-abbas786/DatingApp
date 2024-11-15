@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using System.Security.Claims;
+
 using WebAPI.Data;
 using WebAPI.DTOs;
 using WebAPI.Entities;
@@ -43,6 +45,25 @@ namespace WebAPI.Controllers
                 return NotFound();
 
             return _mapper.Map<MemberDto>(user);
+        }
+
+        [HttpPut]
+
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUdateDto)
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (username == null) return BadRequest("No username found in token");
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            if (user == null) return BadRequest("Could not find user");
+
+            _mapper.Map(memberUdateDto, user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to update the user");
         }
     }
 }
