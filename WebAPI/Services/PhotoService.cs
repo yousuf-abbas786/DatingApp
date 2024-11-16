@@ -40,7 +40,7 @@ namespace WebAPI.Services
             return uploadResult;
         }
 
-        public async Task<DeletionResult> DeletePhotoAsyn(string publicId)
+        public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
 

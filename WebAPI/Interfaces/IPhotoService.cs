@@ -6,6 +6,6 @@ namespace WebAPI.Interfaces
     {
         Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
 
-        Task<DeletionResult> DeletePhotoAsyn(string publicId);
+        Task<DeletionResult> DeletePhotoAsync(string publicId);
     }
 }
