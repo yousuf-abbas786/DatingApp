@@ -13,6 +13,8 @@ namespace WebAPI.Helpers
                 .ForMember(d => d.PhotoUrl, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain)!.Url));
             CreateMap<Photo, PhotoDto>();
             CreateMap<MemberUpdateDto, AppUser>();
+            CreateMap<RegisterDto, AppUser>();
+            CreateMap<string, DateOnly>().ConvertUsing(s => DateOnly.Parse(s));
         }
     }
 }
