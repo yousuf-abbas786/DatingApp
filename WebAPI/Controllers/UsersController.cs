@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+using System.Runtime.Serialization;
 using System.Security.Claims;
 
 using WebAPI.DTOs;
 using WebAPI.Entities;
 using WebAPI.Extensions;
+using WebAPI.Helpers;
 using WebAPI.Interfaces;
 
 namespace WebAPI.Controllers
@@ -16,36 +18,37 @@ namespace WebAPI.Controllers
     [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;   
         private readonly IPhotoService _photoService;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
+        public UsersController(IUserRepository userRepository, IPhotoService photoService, IMapper mapper)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
             _photoService = photoService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _userRepository.GetUsersAsync();
+            userParams.CurrentUsername = User.GetUsername();
+            var users = await _userRepository.GetMembersAsync(userParams);
 
-            var usersToRetrn = _mapper.Map<IEnumerable<MemberDto>>(users);
+            Response.AddPaginationHeader(users);
 
-            return Ok(usersToRetrn);
+            return Ok(users);
         }
 
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(username);
+            var user = await _userRepository.GetMemberAsync(username);
 
             if (user == null)
                 return NotFound();
 
-            return _mapper.Map<MemberDto>(user);
+            return user;
         }
 
         [HttpPut]
