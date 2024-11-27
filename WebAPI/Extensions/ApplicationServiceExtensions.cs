@@ -4,6 +4,7 @@ using WebAPI.Data;
 using WebAPI.Helpers;
 using WebAPI.Interfaces;
 using WebAPI.Services;
+using WebAPI.SignalR;
 
 namespace WebAPI.Extensions
 {
@@ -26,6 +27,8 @@ namespace WebAPI.Extensions
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
 
             return services;
         }

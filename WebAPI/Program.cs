@@ -11,6 +11,7 @@ using WebAPI.Extensions;
 using WebAPI.Interfaces;
 using WebAPI.Middleware;
 using WebAPI.Services;
+using WebAPI.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,12 +37,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(x => x.AllowAnyHeader()
                 .AllowAnyMethod()
+                .AllowCredentials()
                 .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 using var scope = app.Services.CreateScope();
 
@@ -52,6 +56,7 @@ try
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
+    await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]");
     await Seed.SeedUsers(userManager, roleManager);
 }
 catch (Exception e)

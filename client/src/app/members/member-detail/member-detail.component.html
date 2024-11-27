@@ -8,22 +8,28 @@
             class="card-img img-thumbnail"
       />
       <div class="card-body">
-        <div>
-          <strong>Location</strong>
-          <p>{{member.city}}, {{member.country}}</p>
-        </div>
-        <div>
-          <strong>Age</strong>
-          <p>{{member.age}}</p>
-        </div>
-        <div>
-          <strong>Last Active:</strong>
-          <p>{{member.lastActive | timeago}}</p>
-        </div>
-        <div>
-          <strong>Member Since:</strong>
-          <p>{{member.created | date: 'dd MMM yyyy'}}</p>
-        </div>
+          @if (presenceService.onlineUsers().includes(member.userName))
+          {
+              <div class="mb-2">
+                  <i class="fa fa-user-circle text-success"> Online now</i>
+              </div>
+          }
+          <div>
+              <strong>Location</strong>
+              <p>{{member.city}}, {{member.country}}</p>
+          </div>
+          <div>
+              <strong>Age</strong>
+              <p>{{member.age}}</p>
+          </div>
+          <div>
+              <strong>Last Active:</strong>
+              <p>{{member.lastActive | timeago}}</p>
+          </div>
+          <div>
+              <strong>Member Since:</strong>
+              <p>{{member.created | date: 'dd MMM yyyy'}}</p>
+          </div>
       </div>
       <div class="card-footer">
         <div class="btn-group d-flex">
@@ -52,7 +58,7 @@
         }
       </tab>
       <tab heading="Messages"(selectTab)="onTabActivated($event)">
-        <app-member-messages (updateMessages)="onUpdateMessages($event)" [username]="member.userName" [messages]="messages"></app-member-messages>
+        <app-member-messages [username]="member.userName"></app-member-messages>
       </tab>
     </tabset>
   </div>
