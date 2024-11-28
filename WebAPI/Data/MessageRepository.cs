@@ -83,24 +83,22 @@ namespace WebAPI.Data
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
         {
-            var messages = await _context.Messages
-                .Where(x => 
-                    x.RecipientUsername == currentUsername && !x.RecipientDeleted && x.SenderUsername == recipientUsername || 
+            var query = _context.Messages
+                .Where(x =>
+                    x.RecipientUsername == currentUsername && !x.RecipientDeleted && x.SenderUsername == recipientUsername ||
                     x.SenderUsername == currentUsername && !x.SenderDeleted && x.RecipientUsername == recipientUsername
                 )
-                .OrderBy(x => x.MessageSent)
-                .ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .OrderBy(x => x.MessageSent)    
+                .AsQueryable();
 
-            var unreadMessages = messages.Where(x => x.DateRead == null && x.RecipientUsername == currentUsername).ToList();
+            var unreadMessages = query.Where(x => x.DateRead == null && x.RecipientUsername == currentUsername).ToList();
 
             if (unreadMessages.Count != 0)
             {
                 unreadMessages.ForEach(x => x.DateRead = DateTime.UtcNow);
-                await _context.SaveChangesAsync();
             }
 
-            return messages;
+            return await query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public void RemoveConnection(Connection connection)
